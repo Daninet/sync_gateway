@@ -17,7 +17,7 @@
   <project name="build" path="cbbuild" remote="couchbase" />
 
   <!-- Sync Gateway -->
-  <project name="sync_gateway" path="godeps/src/github.com/couchbase/sync_gateway" revision="a5b7b09bc89fd850b4131bba883541b94418fc39" remote="couchbase"/>
+  <project name="sync_gateway" path="godeps/src/github.com/couchbase/sync_gateway" revision="6a443f535b4eb373f2e0086d1219365c6aac4577" remote="couchbase"/>
   
   <!-- Dependencies -->
   <project name="go.assert" path="godeps/src/github.com/couchbaselabs/go.assert" remote="couchbaselabs" revision="cfb33e3a0dac05ae1ecbc0e97188c5cf746a1b78"/>
