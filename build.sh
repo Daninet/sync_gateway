@@ -4,6 +4,27 @@ set -x
 
 # This script builds sync gateway using pinned dependencies.
 
+# Function which rewrites the manifest according to the commit passed in arguments.
+# This is needed by the CI system in order to test feature branches.
+#
+# Steps
+#   - Fetches manifest with given commit
+#   - Updates sync gateway pinned commit to match the given commit (of feature branch)
+#   - Overwrites .repo/manifest.xml with this new manifest
+#
+# It should be run *before* 'repo sync'
+rewriteManifest () {
+    BRANCH="$1"
+    COMMIT="$2"
+    echo "Manifest before rewrite"
+    cat .repo/manifest.xml
+    curl "https://raw.githubusercontent.com/tleyden/sync_gateway/$COMMIT/rewrite-manifest.sh" > rewrite-manifest.sh
+    chmod +x rewrite-manifest.sh
+    ./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$COMMIT" > .repo/manifest.xml
+    echo "Manifest after rewrite"
+    cat .repo/manifest.xml    
+}
+
 ## This script is not intended to be run "in place" from a git clone.
 ## The next check tries to ensure that's the case
 if [ -f "main.go" ]; then
@@ -26,21 +47,10 @@ if [ ! -d "$REPO_DIR" ]; then
     repo init -u "https://github.com/tleyden/sync_gateway.git" -m manifest/default.xml
 fi
 
-# Fetches manifest with given commit
-# Updates sync gateway pinned commit to match the feature branch
-# Overwrites .repo/manifest.xml with this new manifest
+## If two command line args were passed in (branch and commit), then rewrite manifest.xml
 if [ "$#" -eq 2 ]; then
-    BRANCH="$1"
-    COMMIT="$2"
-    echo "Manifest before rewrite"
-    cat .repo/manifest.xml
-    curl "https://raw.githubusercontent.com/tleyden/sync_gateway/$COMMIT/rewrite-manifest.sh" > rewrite-manifest.sh
-    chmod +x rewrite-manifest.sh
-    ./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$COMMIT" > .repo/manifest.xml
-    echo "Manifest after rewrite"
-    cat .repo/manifest.xml
+    rewriteManifest
 fi
-
 
 ## Repo Sync
 repo sync
