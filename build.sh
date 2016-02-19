@@ -32,7 +32,7 @@ fi
 echo "argv1: $1 argv2: $2"
 if [ "$#" -eq 2 ]; then
     echo "Have two args"
-    if [ "$1" == "master" ]; then
+    if [ "$1" = "master" ]; then
 	echo "Manifest before rewrite"
 	cat ./repo/manifest.xml
 	curl https://raw.githubusercontent.com/tleyden/sync_gateway/master/rewrite-manifest.sh > rewrite-manifest.sh
