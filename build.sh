@@ -30,8 +30,8 @@ fi
 # Updates sync gateway pinned commit to match the feature branch
 # Overwrites .repo/manifest.xml with this new manifest
 echo "argv1: $1 argv2: $2"
-if [ -z "$1" ]; then
-    echo "Have argv1"
+if [ "$#" -eq 2 ]; then
+    echo "Have two args"
     if [ "$1" == "master" ]; then
 	echo "Manifest before rewrite"
 	cat ./repo/manifest.xml
@@ -42,6 +42,7 @@ if [ -z "$1" ]; then
 	cat ./repo/manifest.xml
     fi
 fi
+
 
 ## Repo Sync
 repo sync
@@ -54,7 +55,7 @@ cd $SG_DIR
 cd $CURRENT_DIR
 
 ## Go Install
-GOPATH=`pwd`/godeps go install "$@" github.com/couchbase/sync_gateway/...
+GOPATH=`pwd`/godeps go install github.com/couchbase/sync_gateway/...
 
 echo "Success! Output is godeps/bin/sync_gateway and godeps/bin/sg_accel "
 
