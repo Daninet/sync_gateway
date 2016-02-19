@@ -50,8 +50,14 @@ After this operation completes you should have a new `sync_gateway` binary in `$
 **Running Unit Tests**
 
 ```
-$ cd $GOPATH/src/github.com/couchbase/sync_gateway/
-$ ./test.sh
+$ go test github.com/couchbase/sync_gateway/...
+```
+
+**Running Benchmarks**
+
+```
+go test github.com/couchbase/sync_gateway/... -bench='LoggingPerformance' -benchtime 1m -run XXX
+go test github.com/couchbase/sync_gateway/... -bench='RestApiGetDocPerformance' -cpu 1,2,4 -benchtime 1m -run XXX
 ```
 
 ### License
