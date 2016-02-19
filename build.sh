@@ -29,18 +29,16 @@ fi
 # Fetches manifest with given commit
 # Updates sync gateway pinned commit to match the feature branch
 # Overwrites .repo/manifest.xml with this new manifest
-echo "argv1: $1 argv2: $2"
 if [ "$#" -eq 2 ]; then
-    echo "Have two args"
-    if [ "$1" = "master" ]; then
-	echo "Manifest before rewrite"
-	cat .repo/manifest.xml
-	curl https://raw.githubusercontent.com/tleyden/sync_gateway/master/rewrite-manifest.sh > rewrite-manifest.sh
-	chmod +x rewrite-manifest.sh
-	./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$2" > .repo/manifest.xml
-	echo "Manifest after rewrite"
-	cat .repo/manifest.xml
-    fi
+    BRANCH="$1"
+    COMMIT="$2"
+    echo "Manifest before rewrite"
+    cat .repo/manifest.xml
+    curl "https://raw.githubusercontent.com/tleyden/sync_gateway/$COMMIT/rewrite-manifest.sh" > rewrite-manifest.sh
+    chmod +x rewrite-manifest.sh
+    ./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$COMMIT" > .repo/manifest.xml
+    echo "Manifest after rewrite"
+    cat .repo/manifest.xml
 fi
 
 
