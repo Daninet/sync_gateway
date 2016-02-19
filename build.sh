@@ -18,9 +18,9 @@ rewriteManifest () {
     COMMIT="$2"
     echo "Manifest before rewrite"
     cat .repo/manifest.xml
-    curl "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/rewrite-manifest.sh" > rewrite-manifest.sh
+    curl "https://raw.githubusercontent.com/tleyden/sync_gateway/$COMMIT/rewrite-manifest.sh" > rewrite-manifest.sh
     chmod +x rewrite-manifest.sh
-    ./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$2" > .repo/manifest.xml
+    ./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$COMMIT" > .repo/manifest.xml
     echo "Manifest after rewrite"
     cat .repo/manifest.xml    
 }
@@ -49,7 +49,7 @@ fi
 
 ## If two command line args were passed in (branch and commit), then rewrite manifest.xml
 if [ "$#" -eq 2 ]; then
-    rewriteManifest
+    rewriteManifest "$@"
 fi
 
 ## Repo Sync
