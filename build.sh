@@ -34,12 +34,12 @@ if [ "$#" -eq 2 ]; then
     echo "Have two args"
     if [ "$1" = "master" ]; then
 	echo "Manifest before rewrite"
-	cat ./repo/manifest.xml
+	cat .repo/manifest.xml
 	curl https://raw.githubusercontent.com/tleyden/sync_gateway/master/rewrite-manifest.sh > rewrite-manifest.sh
 	chmod +x rewrite-manifest.sh
 	./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$2" > .repo/manifest.xml
 	echo "Manifest after rewrite"
-	cat ./repo/manifest.xml
+	cat .repo/manifest.xml
     fi
 fi
 
