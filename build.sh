@@ -2,6 +2,13 @@
 
 # This script builds sync gateway using pinned dependencies.
 
+## This script is not intended to be run "in place" from a git clone.
+## The next check tries to ensure that's the case
+if [ -f "main.go" ]; then
+    echo "It appears you are trying to run this the wrong way.  See README"
+    exit 1
+fi 
+
 ## Make sure the repo tool is installed, otherwise throw an error
 which repo
 if (( $? != 0 )); then
@@ -43,6 +50,6 @@ sed -i.bak -e 's/GitDirty.*=.*/GitDirty = "'$GIT_DIRTY'"/' $BUILD_INFO
 cd $CURRENT_DIR
 
 ## Go Install
-GOPATH=`pwd`/godeps go install github.com/couchbase/sync_gateway/...
+GOPATH=`pwd`/godeps go install "$@" github.com/couchbase/sync_gateway/...
 
 echo "Success! Output is godeps/bin/sync_gateway and godeps/bin/sg_accel"

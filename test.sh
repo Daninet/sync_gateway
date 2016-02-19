@@ -1,12 +1,11 @@
 #!/bin/sh -e
-# This script runs unit tests in all the subpackages.
 
-# vet reports two errors which are actually OK here.  There are flags
-# to vet to tell it just what you want, but he invocation is a lot
-# more awkward, so I'm just going to grep away the things we don't care
-# about so we can see the things we do.
-go vet ./...
+# Make sure that build.sh has been run first
+SG_DIR=`pwd`/godeps/src/github.com/couchbase/sync_gateway
+if [ ! -d "$SG_DIR" ]; then
+    echo "You must run build.sh before running the tests"
+    exit 1
+fi
 
-# First build everything so the tests don't complain about out-of-date packages
-go test -i ./...
-go test ./... "$@"
+# Run tests
+GOPATH=`pwd`/godeps go test "$@" github.com/couchbase/sync_gateway/...
