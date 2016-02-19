@@ -21,8 +21,15 @@ fi
 REPO_DIR=.repo
 if [ ! -d "$REPO_DIR" ]; then
     echo "No .repo directory found, running 'repo init'"
-    repo init -u "https://github.com/couchbase/sync_gateway.git" -m manifest/default.xml
+    repo init -u "https://github.com/tleyden/sync_gateway.git" -m manifest/default.xml
 fi
+
+# Fetches manifest with given commit
+# Updates sync gateway pinned commit to match the feature branch
+# Overwrites .repo/manifest.xml with this new manifest
+#if $BRANCH != master then:
+#   curl rewrite-manifest.sh .
+#   rewrite-manifest.sh -u https://raw.githubusercontent.com/couchbase/sync_gateway/master/manifest/default.xml --project sync-gateway --set-revision $COMMIT_SHA_ARG > .repo/manifest.xml
 
 ## Repo Sync
 repo sync
