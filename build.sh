@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+set -x
+
 # This script builds sync gateway using pinned dependencies.
 
 ## This script is not intended to be run "in place" from a git clone.
@@ -27,9 +29,19 @@ fi
 # Fetches manifest with given commit
 # Updates sync gateway pinned commit to match the feature branch
 # Overwrites .repo/manifest.xml with this new manifest
-#if $BRANCH != master then:
-#   curl rewrite-manifest.sh .
-#   rewrite-manifest.sh -u https://raw.githubusercontent.com/couchbase/sync_gateway/master/manifest/default.xml --project sync-gateway --set-revision $COMMIT_SHA_ARG > .repo/manifest.xml
+echo "argv1: $1 argv2: $2"
+if [ -z "$1" ]; then
+    echo "Have argv1"
+    if [ "$1" == "master" ]; then
+	echo "Manifest before rewrite"
+	cat ./repo/manifest.xml
+	curl https://raw.githubusercontent.com/tleyden/sync_gateway/master/rewrite-manifest.sh > rewrite-manifest.sh
+	chmod +x rewrite-manifest.sh
+	./rewrite-manifest.sh --manifest-url "https://raw.githubusercontent.com/tleyden/sync_gateway/$2/manifest/default.xml" --project-name "sync_gateway" --set-revision "$2" > .repo/manifest.xml
+	echo "Manifest after rewrite"
+	cat ./repo/manifest.xml
+    fi
+fi
 
 ## Repo Sync
 repo sync

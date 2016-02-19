@@ -6,4 +6,4 @@ build:
     - wget https://raw.githubusercontent.com/tleyden/sync_gateway/master/build.sh
     - cat build.sh
     - chmod +x build.sh
-    - ./build.sh
+    - ./build.sh $$BRANCH $$COMMIT
