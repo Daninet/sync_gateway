@@ -2,9 +2,22 @@
 
 set -x
 
-# This script builds sync gateway using pinned dependencies.
+# This script builds sync gateway using pinned dependencies via the repo tool
+#
+# It is intended to be run locally via developers (see README for instructions)
+# as well as by a CI server.
+#
+# The basic flow is:
+#
+# - Detect if repo tool is installed, if not, install it
+# - Run 'repo init' to pull Sync Gateway manifest
+# - Run 'repo sync' to pull Sync Gateway code and dependencies
+# - (optional) for CI server, it can rewrite the manifest for a branch/commit
+# - Set GOPATH and call 'go install' to compile and build Sync Gateway binaries
 
-# Function which rewrites the manifest according to the commit passed in arguments.
+# -------------------------------- Functions ---------------------------------------
+
+# rewriteManifest (): Function which rewrites the manifest according commit passed in arguments.
 # This is needed by the CI system in order to test feature branches.
 #
 # Steps
@@ -13,8 +26,11 @@ set -x
 #   - Overwrites .repo/manifest.xml with this new manifest
 #
 # It should be run *before* 'repo sync'
+#
+# This technically doesn't need to run on the master branch, and should be a no-op
+# in that case.  I have left that in for now since it enables certain testing.
 rewriteManifest () {
-    BRANCH="$1"
+    BRANCH="$1"  # ignored for the time being
     COMMIT="$2"
     echo "Manifest before rewrite"
     cat .repo/manifest.xml
@@ -24,6 +40,8 @@ rewriteManifest () {
     echo "Manifest after rewrite"
     cat .repo/manifest.xml    
 }
+
+# ------------------------------------ Main ---------------------------------------
 
 ## This script is not intended to be run "in place" from a git clone.
 ## The next check tries to ensure that's the case
