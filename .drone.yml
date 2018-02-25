@@ -14,3 +14,4 @@ pipeline:
     tags: [ latest ]
     username: admin
     password: password
+    repository: registry.danibiro.com
