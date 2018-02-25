@@ -12,6 +12,5 @@ pipeline:
     image: plugins/docker
     repo: registry.danibiro.com/dani/dani
     tags: [ latest ]
-    username: admin
-    password: password
+    secrets: [ registry_username, registry_password ]
     registry: registry.danibiro.com
