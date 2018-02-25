@@ -12,6 +12,4 @@ pipeline:
     image: plugins/docker
     repo: dani/dani
     tags: [ latest ]
-    username: admin
-    password: password
     registry: localhost
