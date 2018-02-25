@@ -12,4 +12,4 @@ pipeline:
     image: plugins/docker
     repo: dani/dani
     tags: [ latest ]
-    registry: registry
+    registry: registry:5000
