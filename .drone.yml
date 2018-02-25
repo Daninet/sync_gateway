@@ -14,3 +14,4 @@ pipeline:
     tags: [ latest ]
     secrets: [ registry_username, registry_password ]
     registry: registry.danibiro.com
+
