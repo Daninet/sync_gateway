@@ -13,3 +13,4 @@ pipeline:
     repo: registry:5000/dani/dani
     tags: [ latest ]
     registry: registry:5000
+
