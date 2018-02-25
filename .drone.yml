@@ -8,3 +8,4 @@ pipeline:
       - cat build.sh
       - chmod +x build.sh
       - ./build.sh $$BRANCH $$COMMIT
+
