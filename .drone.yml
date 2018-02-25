@@ -4,7 +4,7 @@ pipeline:
     commands:
       - cd $GOPATH
       - rm -rf *
-      - wget https://raw.githubusercontent.com/tleyden/sync_gateway/blob/master/build.sh
+      - wget https://raw.githubusercontent.com/Daninet/sync_gateway/master/build.sh
       - cat build.sh
       - chmod +x build.sh
       - ./build.sh $$BRANCH $$COMMIT
