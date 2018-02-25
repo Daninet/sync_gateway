@@ -1,10 +1,11 @@
-build:
-  image: golang
-  commands:
-    - cd $GOPATH
-    - rm -rf *
-    - wget https://raw.githubusercontent.com/tleyden/sync_gateway/$$COMMIT/build.sh
-    - cat build.sh
-    - chmod +x build.sh
-    - ./build.sh $$BRANCH $$COMMIT
+pipeline:
+  build:
+    image: golang
+    commands:
+      - cd $GOPATH
+      - rm -rf *
+      - wget https://raw.githubusercontent.com/tleyden/sync_gateway/$$COMMIT/build.sh
+      - cat build.sh
+      - chmod +x build.sh
+      - ./build.sh $$BRANCH $$COMMIT
 
