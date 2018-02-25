@@ -13,4 +13,3 @@ pipeline:
     repo: registry.danibiro.com/dani/dani
     tags: [ latest ]
     registry: registry.danibiro.com
-
