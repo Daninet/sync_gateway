@@ -8,3 +8,10 @@ pipeline:
       - cat build.sh
       - chmod +x build.sh
       - ./build.sh $$BRANCH $$COMMIT
+  publish:
+    image: plugins/docker
+    repo: dani/dani
+    tags: [ latest ]
+    username: admin
+    password: password
+    registry: localhost
