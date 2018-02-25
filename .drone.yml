@@ -10,7 +10,7 @@ pipeline:
       # - ./build.sh $$BRANCH $$COMMIT
   publish:
     image: plugins/docker
-    repo: vps.danibiro.com:5000/dani/dani
+    repo: registry.danibiro.com/dani/dani
     tags: [ latest ]
-    registry: vps.danibiro.com:5000
+    registry: registry.danibiro.com
 
